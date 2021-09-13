@@ -43,3 +43,7 @@ task makeAll() {
 
   dependsOn 'makeDesktop', 'makeAndroid'
 }
+
+allprojects {
+  tasks.withType(Javadoc).all { enabled = false }
+}
