@@ -75,7 +75,7 @@ pub(crate) fn aes_256_cbc_decrypt(
         .map_err(|_| DecryptionError::BadCiphertext("failed to decrypt"))
 }
 
-pub(crate) fn hmac_sha256(key: &[u8], input: &[u8]) -> [u8; 32] {
+pub fn hmac_sha256(key: &[u8], input: &[u8]) -> [u8; 32] {
     let mut hmac =
         Hmac::<Sha256>::new_from_slice(key).expect("HMAC-SHA256 should accept any size key");
     hmac.update(input);
