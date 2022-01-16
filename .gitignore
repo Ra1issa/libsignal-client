@@ -5,6 +5,12 @@
 /node/dist
 /node_modules
 /build
+java/tests/bin
+java/java/bin
+
+**/.project
+**/.settings
+**/.classpath
 
 /rust/bridge/node/futures/tests/node-tests/node_modules
 
