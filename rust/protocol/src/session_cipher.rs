@@ -15,7 +15,7 @@ use crate::ratchet::{ChainKey, MessageKeys};
 use crate::session;
 use crate::state::SessionState;
 
-use hecate::hecate_lib::hooks;
+use hecate::hooks;
 use rand::{CryptoRng, Rng};
 
 pub async fn message_encrypt(
@@ -53,7 +53,6 @@ pub async fn message_encrypt(
         })?;
 
     // // HECATE
-    println!("hello1");
     let ctext = &hooks::inject_envelope_com(&ctext);
 
     let message = if let Some(items) = session_state.unacknowledged_pre_key_message_items()? {

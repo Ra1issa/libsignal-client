@@ -505,6 +505,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "dirs-next"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b98cf8ebf19c3d1b223e151f99a4f9f0690dca41414773390fc824184ac833e1"
+dependencies = [
+ "cfg-if",
+ "dirs-sys-next",
+]
+
+[[package]]
+name = "dirs-sys-next"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4ebda144c4fe02d1f7ea1a7d9641b6fc6b580adcfa024ae48797ecdeb6825b4d"
+dependencies = [
+ "libc",
+ "redox_users",
+ "winapi",
+]
+
+[[package]]
 name = "displaydoc"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -643,6 +664,26 @@ name = "hashbrown"
 version = "0.11.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ab5ef0d4909ef3724cc8cce6ccc8572c5c817592e9285f5464f8e86f8bd3726e"
+
+[[package]]
+name = "hecate"
+version = "0.1.0"
+dependencies = [
+ "bincode",
+ "chrono",
+ "criterion",
+ "curve25519-dalek",
+ "jni",
+ "libsignal-protocol 0.1.0 (git+https://github.com/Ra1issa/libsignal-client)",
+ "poksho 0.7.0 (git+https://github.com/Ra1issa/libsignal-client)",
+ "rand 0.7.3",
+ "rand_core 0.5.1",
+ "serde",
+ "serde_json",
+ "sha2",
+ "shellexpand",
+ "signal-crypto 0.1.0 (git+https://github.com/Ra1issa/libsignal-client)",
+]
 
 [[package]]
 name = "heck"
@@ -805,7 +846,7 @@ dependencies = [
  "jni",
  "libc",
  "libsignal-bridge-macros",
- "libsignal-protocol",
+ "libsignal-protocol 0.1.0",
  "linkme",
  "log",
  "neon",
@@ -814,7 +855,7 @@ dependencies = [
  "scopeguard",
  "serde",
  "sha2",
- "signal-crypto",
+ "signal-crypto 0.1.0",
  "signal-neon-futures",
  "static_assertions",
  "uuid",
@@ -844,11 +885,11 @@ dependencies = [
  "hsm-enclave",
  "libc",
  "libsignal-bridge",
- "libsignal-protocol",
+ "libsignal-protocol 0.1.0",
  "log",
  "log-panics",
  "rand 0.7.3",
- "signal-crypto",
+ "signal-crypto 0.1.0",
  "zkgroup",
 ]
 
@@ -859,11 +900,11 @@ dependencies = [
  "async-trait",
  "jni",
  "libsignal-bridge",
- "libsignal-protocol",
+ "libsignal-protocol 0.1.0",
  "log",
  "log-panics",
  "rand 0.7.3",
- "signal-crypto",
+ "signal-crypto 0.1.0",
 ]
 
 [[package]]
@@ -872,7 +913,7 @@ version = "0.12.0"
 dependencies = [
  "async-trait",
  "libsignal-bridge",
- "libsignal-protocol",
+ "libsignal-protocol 0.1.0",
  "log",
  "log-panics",
  "neon",
@@ -893,6 +934,35 @@ dependencies = [
  "curve25519-dalek",
  "displaydoc",
  "futures-util",
+ "hecate",
+ "hex",
+ "hkdf",
+ "hmac",
+ "itertools",
+ "log",
+ "num_enum",
+ "prost",
+ "prost-build",
+ "rand 0.7.3",
+ "sha2",
+ "subtle",
+ "thiserror",
+ "uuid",
+ "x25519-dalek",
+]
+
+[[package]]
+name = "libsignal-protocol"
+version = "0.1.0"
+source = "git+https://github.com/Ra1issa/libsignal-client#e23a6400b66e0009f9a74219193f09eb7cbd97e5"
+dependencies = [
+ "aes",
+ "aes-gcm-siv",
+ "arrayref",
+ "async-trait",
+ "block-modes",
+ "curve25519-dalek",
+ "displaydoc",
  "hex",
  "hkdf",
  "hmac",
@@ -1326,6 +1396,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "poksho"
+version = "0.7.0"
+source = "git+https://github.com/Ra1issa/libsignal-client#e23a6400b66e0009f9a74219193f09eb7cbd97e5"
+dependencies = [
+ "curve25519-dalek",
+ "hmac",
+ "sha2",
+]
+
+[[package]]
 name = "poly1305"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1563,6 +1643,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "redox_users"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "528532f3d801c87aec9def2add9ca802fe569e44a544afe633765267840abe64"
+dependencies = [
+ "getrandom 0.2.3",
+ "redox_syscall",
+]
+
+[[package]]
 name = "regex"
 version = "1.5.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1787,6 +1877,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "shellexpand"
+version = "2.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "83bdb7831b2d85ddf4a7b148aa19d0587eddbe8671a436b7bd1182eaad0f2829"
+dependencies = [
+ "dirs-next",
+]
+
+[[package]]
 name = "signal-crypto"
 version = "0.1.0"
 dependencies = [
@@ -1799,6 +1898,20 @@ dependencies = [
  "rand 0.7.3",
  "serde",
  "serde_json",
+ "sha-1",
+ "sha2",
+ "subtle",
+]
+
+[[package]]
+name = "signal-crypto"
+version = "0.1.0"
+source = "git+https://github.com/Ra1issa/libsignal-client#e23a6400b66e0009f9a74219193f09eb7cbd97e5"
+dependencies = [
+ "aes",
+ "generic-array",
+ "ghash",
+ "hmac",
  "sha-1",
  "sha2",
  "subtle",
@@ -2223,7 +2336,7 @@ dependencies = [
  "curve25519-dalek",
  "displaydoc",
  "hex",
- "poksho",
+ "poksho 0.7.0",
  "serde",
  "sha2",
 ]
