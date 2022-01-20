@@ -61,7 +61,7 @@ pub struct SignalMessage {
     counter: u32,
     #[allow(dead_code)]
     previous_counter: u32,
-    ciphertext: Box<[u8]>,
+    pub ciphertext: Box<[u8]>,
     serialized: Box<[u8]>,
 }
 
@@ -237,7 +237,7 @@ pub struct PreKeySignalMessage {
     signed_pre_key_id: u32,
     base_key: PublicKey,
     identity_key: IdentityKey,
-    message: SignalMessage,
+    pub message: SignalMessage,
     serialized: Box<[u8]>,
 }
 

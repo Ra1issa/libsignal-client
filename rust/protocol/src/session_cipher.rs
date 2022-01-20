@@ -15,6 +15,7 @@ use crate::ratchet::{ChainKey, MessageKeys};
 use crate::session;
 use crate::state::SessionState;
 
+use hecate::hecate_lib::hooks;
 use rand::{CryptoRng, Rng};
 
 pub async fn message_encrypt(
@@ -24,6 +25,7 @@ pub async fn message_encrypt(
     identity_store: &mut dyn IdentityKeyStore,
     ctx: Context,
 ) -> Result<CiphertextMessage> {
+
     let mut session_record = session_store
         .load_session(remote_address, ctx)
         .await?
@@ -43,11 +45,16 @@ pub async fn message_encrypt(
         .remote_identity_key()?
         .ok_or(SignalProtocolError::InvalidSessionStructure)?;
 
+
     let ctext = crypto::aes_256_cbc_encrypt(ptext, message_keys.cipher_key(), message_keys.iv())
         .map_err(|_| {
             log::error!("session state corrupt for {}", remote_address);
             SignalProtocolError::InvalidSessionStructure
         })?;
+
+    // // HECATE
+    println!("hello1");
+    let ctext = &hooks::inject_envelope_com(&ctext);
 
     let message = if let Some(items) = session_state.unacknowledged_pre_key_message_items()? {
         let local_registration_id = session_state.local_registration_id()?;
@@ -525,6 +532,7 @@ fn decrypt_message_with_state<R: Rng + CryptoRng>(
     remote_address: &ProtocolAddress,
     csprng: &mut R,
 ) -> Result<Vec<u8>> {
+
     if !state.has_sender_chain()? {
         return Err(SignalProtocolError::InvalidMessage(
             "No session available to decrypt",
@@ -558,8 +566,9 @@ fn decrypt_message_with_state<R: Rng + CryptoRng>(
         return Err(SignalProtocolError::InvalidCiphertext);
     }
 
+    let ctext = hooks::remove_envelope_com(ciphertext.body());
     let ptext = match crypto::aes_256_cbc_decrypt(
-        ciphertext.body(),
+        &ctext,
         message_keys.cipher_key(),
         message_keys.iv(),
     ) {
@@ -577,7 +586,6 @@ fn decrypt_message_with_state<R: Rng + CryptoRng>(
             return Err(SignalProtocolError::InvalidCiphertext);
         }
     };
-
     state.clear_unacknowledged_pre_key_message()?;
 
     Ok(ptext)
