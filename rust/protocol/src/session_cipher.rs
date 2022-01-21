@@ -15,7 +15,6 @@ use crate::ratchet::{ChainKey, MessageKeys};
 use crate::session;
 use crate::state::SessionState;
 
-use hecate::hooks;
 use rand::{CryptoRng, Rng};
 
 pub async fn message_encrypt(
@@ -52,8 +51,6 @@ pub async fn message_encrypt(
             SignalProtocolError::InvalidSessionStructure
         })?;
 
-    // HECATE
-    let ctext = &hooks::inject_envelope_com(&ctext);
 
     let message = if let Some(items) = session_state.unacknowledged_pre_key_message_items()? {
         let local_registration_id = session_state.local_registration_id()?;
@@ -564,10 +561,8 @@ fn decrypt_message_with_state<R: Rng + CryptoRng>(
     if !mac_valid {
         return Err(SignalProtocolError::InvalidCiphertext);
     }
-
-    let ctext = hooks::remove_envelope_com(ciphertext.body());
     let ptext = match crypto::aes_256_cbc_decrypt(
-        &ctext,
+        ciphertext.body(),
         message_keys.cipher_key(),
         message_keys.iv(),
     ) {
