@@ -52,7 +52,7 @@ pub async fn message_encrypt(
             SignalProtocolError::InvalidSessionStructure
         })?;
 
-    // // HECATE
+    // HECATE
     let ctext = &hooks::inject_envelope_com(&ctext);
 
     let message = if let Some(items) = session_state.unacknowledged_pre_key_message_items()? {
