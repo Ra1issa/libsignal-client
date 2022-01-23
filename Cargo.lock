@@ -537,6 +537,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "ed25519"
+version = "1.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "74e1069e39f1454367eb2de793ed062fac4c35c2934b76a81d90dd9abcd28816"
+dependencies = [
+ "signature",
+]
+
+[[package]]
+name = "ed25519-dalek"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c762bae6dcaf24c4c84667b8579785430908723d5c889f469d76a41d59cc7a9d"
+dependencies = [
+ "curve25519-dalek",
+ "ed25519",
+ "rand 0.7.3",
+ "serde",
+ "sha2",
+ "zeroize",
+]
+
+[[package]]
 name = "either"
 version = "1.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -673,16 +696,17 @@ dependencies = [
  "chrono",
  "criterion",
  "curve25519-dalek",
+ "ed25519",
+ "ed25519-dalek",
  "jni",
- "libsignal-protocol 0.1.0 (git+https://github.com/Ra1issa/libsignal-client)",
- "poksho 0.7.0 (git+https://github.com/Ra1issa/libsignal-client)",
+ "libsignal-protocol 0.1.0 (git+https://github.com/Ra1issa/libsignal-client.git?branch=hecateless)",
  "rand 0.7.3",
  "rand_core 0.5.1",
  "serde",
  "serde_json",
  "sha2",
  "shellexpand",
- "signal-crypto 0.1.0 (git+https://github.com/Ra1issa/libsignal-client)",
+ "signal-crypto 0.1.0 (git+https://github.com/Ra1issa/libsignal-client.git?branch=hecateless)",
 ]
 
 [[package]]
@@ -954,7 +978,7 @@ dependencies = [
 [[package]]
 name = "libsignal-protocol"
 version = "0.1.0"
-source = "git+https://github.com/Ra1issa/libsignal-client#e23a6400b66e0009f9a74219193f09eb7cbd97e5"
+source = "git+https://github.com/Ra1issa/libsignal-client.git?branch=hecateless#935440d57c2c76243d66f1e56bca81241a636aed"
 dependencies = [
  "aes",
  "aes-gcm-siv",
@@ -1391,16 +1415,6 @@ version = "0.7.0"
 dependencies = [
  "curve25519-dalek",
  "hex",
- "hmac",
- "sha2",
-]
-
-[[package]]
-name = "poksho"
-version = "0.7.0"
-source = "git+https://github.com/Ra1issa/libsignal-client#e23a6400b66e0009f9a74219193f09eb7cbd97e5"
-dependencies = [
- "curve25519-dalek",
  "hmac",
  "sha2",
 ]
@@ -1906,7 +1920,7 @@ dependencies = [
 [[package]]
 name = "signal-crypto"
 version = "0.1.0"
-source = "git+https://github.com/Ra1issa/libsignal-client#e23a6400b66e0009f9a74219193f09eb7cbd97e5"
+source = "git+https://github.com/Ra1issa/libsignal-client.git?branch=hecateless#935440d57c2c76243d66f1e56bca81241a636aed"
 dependencies = [
  "aes",
  "generic-array",
@@ -1934,6 +1948,12 @@ dependencies = [
  "neon",
  "signal-neon-futures",
 ]
+
+[[package]]
+name = "signature"
+version = "1.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f054c6c1a6e95179d6f23ed974060dcefb2d9388bb7256900badad682c499de4"
 
 [[package]]
 name = "simple_asn1"
@@ -2336,7 +2356,7 @@ dependencies = [
  "curve25519-dalek",
  "displaydoc",
  "hex",
- "poksho 0.7.0",
+ "poksho",
  "serde",
  "sha2",
 ]

@@ -565,6 +565,7 @@ fn decrypt_message_with_state<R: Rng + CryptoRng>(
         return Err(SignalProtocolError::InvalidCiphertext);
     }
 
+    // HECATE
     let ctext = hooks::remove_envelope_com(ciphertext.body());
     let ptext = match crypto::aes_256_cbc_decrypt(
         &ctext,
