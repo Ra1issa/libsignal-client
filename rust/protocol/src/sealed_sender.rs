@@ -27,6 +27,7 @@ use uuid::Uuid;
 use proto::sealed_sender::unidentified_sender_message::message::Type as ProtoMessageType;
 
 use std::convert::{TryFrom, TryInto};
+use std::time::SystemTime;
 
 #[derive(Debug, Clone)]
 pub struct ServerCertificate {
@@ -901,6 +902,10 @@ pub async fn sealed_sender_encrypt_from_usmc<R: Rng + CryptoRng>(
         encrypted_message: Some(message_data),
     };
     pb.encode(&mut serialized)?; // appends to buffer
+
+    //here
+    let now = SystemTime::now().duration_since(SystemTime::UNIX_EPOCH).unwrap();
+    println!("Rust:{:?}", now.as_millis());
 
     Ok(serialized)
 }
